@@ -29,7 +29,6 @@ var server = http.createServer(function(request, response){
         }
 
         var volumePrimaryPn = reqUrl.pathname.replace('/', '');
-        console.log(volumePrimaryPn);
         if(volumePrimaryPn === '' || (volumePrimaryPn != 1 && volumePrimaryPn != 2)){
             volumePrimaryPn = 1;
         }
@@ -48,5 +47,5 @@ var server = http.createServer(function(request, response){
 
 // ~ Create nornenjs server
 var NornenjsServer = require('../lib/server').NornenjsServer;
-var nornenjsServer = new NornenjsServer(server, 9000, 512 );
+var nornenjsServer = new NornenjsServer(server, 9000, 512);
 nornenjsServer.connect();
