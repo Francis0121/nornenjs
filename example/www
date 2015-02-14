@@ -41,11 +41,11 @@ var server = http.createServer(function(request, response){
         response.end(html);
     });
     
-}).listen(3000, function() {
+}).listen(5000, function() {
     console.log('Server listening on port ' + server.address().port);
 });
 
 // ~ Create nornenjs server
 var NornenjsServer = require('../lib/server').NornenjsServer;
-var nornenjsServer = new NornenjsServer(server, 9000, 512);
+var nornenjsServer = new NornenjsServer(server, 5005, 512);
 nornenjsServer.connect();
