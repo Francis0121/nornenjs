@@ -1,0 +1,35 @@
+{
+  "name": "nornenjs",
+  "version": "0.1.0",
+  "description": "NVIDIA CUDA™ bindings for Node.js and Volume Rendering and streaming client",
+  "keywords": [
+    "NVIDIA",
+    "CUDA",
+    "GPU",
+    "VOLUME RENDERING",
+    "STREAMING"
+  ],
+  "homepage": " ",
+  "author": "Francis Kim. <tjdrms0121@gmail.com>",
+  "contributors": [
+    {
+      "name": "Teriusbin Lee.",
+      "email": ""
+    }
+  ],
+  "main": "server.js",
+  "directories": {
+    "src": "src-cpp"
+  },
+  "scripts": {
+    "preinstall": "node-gyp clean || true; node-gyp configure build",
+    "install": "node-gyp rebuild"
+  },
+  
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  
+  "license": "MIT"
+}
