@@ -46,7 +46,7 @@ Handle<Value> Module::Load(const Arguments& args) {
    
   return scope.Close(result);
 }
-void volumeTextureLoad(unsigned int width, unsigned int height, unsigned int depth, char * filename, Module *pmodule){
+void Module::volumeTextureLoad(unsigned int width, unsigned int height, unsigned int depth, char * filename, Module *pmodule){
 
    size_t size = width * height *depth * sizeof(unsigned char);
 
@@ -93,7 +93,7 @@ void volumeTextureLoad(unsigned int width, unsigned int height, unsigned int dep
 
    free(h_data);
 }
-void otfTableTextureLoad(float4 *input_float_1D, unsigned int otf_size, Module *pmodule){
+void Module::otfTableTextureLoad(float4 *input_float_1D, unsigned int otf_size, Module *pmodule){
    // Create the array on the device
    CUarray otf_array;
    CUDA_ARRAY_DESCRIPTOR ad;
@@ -115,7 +115,7 @@ void otfTableTextureLoad(float4 *input_float_1D, unsigned int otf_size, Module *
    cuTexRefSetFormat(otf_texref, CU_AD_FORMAT_FLOAT, 4);
    cuTexRefSetArray(otf_texref, otf_array, CU_TRSA_OVERRIDE_FORMAT);
 }
-float4 *getOTFtable(int otf_start, int otf_end, int otf_size){
+float4 *Module::getOTFtable(int otf_start, int otf_end, int otf_size){
 
     float4 *otf_table= (float4 *)malloc(sizeof(float4)*otf_size);
 

@@ -2,7 +2,7 @@
 
 We were implemented based on ["node-cuda"](https://github.com/kashif/node-cuda).
 
-We added some library "node-cuda" `this.library` and `this.library`. And change some code that implement receive multi parameter to CUDA source.
+We added some library "node-cuda" `cuda_runtime_api.h` and `helper_math.h`. And change some code that implement receive multi parameter to CUDA source.
 
 And we used ["BinaryJS"](http://binaryjs.com/) and ["socket.io"](http://socket.io/).
 

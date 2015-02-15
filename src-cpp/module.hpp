@@ -2,6 +2,7 @@
 #define MODULE_HPP
 
 #include <cuda.h>
+#include <cuda_runtime_api.h>
 #include "bindings.hpp"
 
 namespace NodeCuda {
@@ -22,6 +23,9 @@ namespace NodeCuda {
 
     private:
       static Handle<Value> New(const Arguments& args);
+      static void volumeTextureLoad(unsigned int width, unsigned int height, unsigned int depth, char * filename, Module *pmodule);
+      static void otfTableTextureLoad(float4 *input_float_1D, unsigned int otf_size, Module *pmodule);
+      static float4 * getOTFtable(int otf_start, int otf_end, int otf_size);
 
 
   };
