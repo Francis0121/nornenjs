@@ -75,6 +75,12 @@
         beforeY : 0
     };
 
+    var mouse = {
+        isOn : false,
+        beforeX : 0,
+        beforeY : 0
+    };
+    
     var option = {
         rotationX : 0,
         rotationY : 0
@@ -120,8 +126,37 @@
         event.preventDefault();
         touch.isOn = false;
     });
-    
-    
+
+
+    canvas.addEventListener('mousedown', function(event){
+        event.preventDefault();
+
+        mouse.isOn = true;
+        mouse.beforeX = event.pageX;
+        mouse.beforeY = event.pageY;
+
+    });
+
+    canvas.addEventListener('mousemove', function(event){
+        event.preventDefault();
+
+        if(mouse.isOn){
+            option.rotationX += (event.pageX - mouse.beforeX)/5.0;
+            option.rotationY += (event.pageY - mouse.beforeY)/5.0;
+
+            mouse.beforeX = event.pageX;
+            mouse.beforeY = event.pageY;
+
+            socket.emit('event', option);
+        }
+    });
+
+    canvas.addEventListener('mouseup', function(event){
+        event.preventDefault();
+        mouse.isOn = false;
+    });
+
+
 </script>
 
 </body>
