@@ -27,7 +27,7 @@
                 return;
             }
             
-            socket.emit('stream');
+            socket.emit('init');
         });
 
         /**
@@ -53,15 +53,76 @@
         });
         
         setInterval(function(){ console.log(fps); fps = 0; }, 1000);
-        
+
     </script>
     
 </head>
 <body>
 
-<canvas id="view_canvas" width="512" height="512">
+<canvas id="view_canvas" width="256" height="256">
 
 </canvas>
+
+<script>
+    
+    // ~ Touch
+
+    var canvas = document.getElementById('view_canvas');
+
+    var touch = {
+        isOn : false,
+        beforeX : 0,
+        beforeY : 0
+    };
+
+    var option = {
+        rotationX : 0,
+        rotationY : 0
+    };
+
+    canvas.addEventListener('touchstart', function(event){
+        event.preventDefault();
+        var touches = event.changedTouches;
+
+        if(touches.length == 1){
+            touch.isOn = true;
+            touch.beforeX = touches[0].pageX;
+            touch.beforeY = touches[0].pageY;
+        }
+    });
+
+    canvas.addEventListener('touchmove', function(event){
+        event.preventDefault();
+        var touches = event.changedTouches;
+
+        if(touch.isOn){
+            option.rotationX += (touches[0].pageX - touch.beforeX)/10.0;
+            option.rotationY += (touches[0].pageY - touch.beforeY)/10.0;
+
+            touch.beforeX = touches[0].pageX;
+            touch.beforeY = touches[0].pageY;
+
+            socket.emit('event', option);
+        }
+    });
+
+    canvas.addEventListener('touchend', function(event){
+        event.preventDefault();
+        touch.isOn = false;
+    });
+
+    canvas.addEventListener('touchcancel', function handleCancel(event) {
+        event.preventDefault();
+        touch.isOn = false;
+    });
+
+    canvas.addEventListener('touchleave', function(event){
+        event.preventDefault();
+        touch.isOn = false;
+    });
+    
+    
+</script>
 
 </body>
 </html>
