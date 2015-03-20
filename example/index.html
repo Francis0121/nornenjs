@@ -48,6 +48,9 @@
             img.src = url;
         });
 
+        /**
+         * Other client disconnect
+         */
         socket.on('otherClientDisconnect', function(){
             socket.emit('connectMessage');
         });
