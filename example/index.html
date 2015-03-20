@@ -7,20 +7,61 @@
     <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
     
     <script src="http://${ipAddress}:5000/socket.io/socket.io.js"></script>
-    <script src="http://www.nornenjs.com/client/nornenjs.0.1.0.js"></script>
+    
+    <script>
+
+        var socket = io.connect('http://${ipAddress}:5000', { reconnection : false } );
+        var fps = 0;
+
+        /**
+         * send connect message to server
+         */
+        socket.emit('connectMessage');
+
+        /**
+         * emit connect - response message
+         */
+        socket.on('connectMessage', function(message){
+            if(!message.success){
+                alert(message.error);
+                return;
+            }
+            
+            socket.emit('stream');
+        });
+
+        /**
+         * Socket stream data
+         */
+        socket.on('stream', function(imageBlob){
+            
+            var blob = new Blob( [ imageBlob ], { type: 'image/jpeg' } );
+            var url = (window.URL || window.webkitURL).createObjectURL(blob);
+            var canvas = document.getElementById('view_canvas');
+            var ctx = canvas.getContext('2d');
+
+            var img = new Image(512, 512);
+            img.onload = function(){
+                ctx.drawImage(img, 0, 0, 512, 512, 0, 0, canvas.clientWidth, canvas.clientWidth);
+                fps++;
+            };
+            img.src = url;
+        });
+
+        socket.on('otherClientDisconnect', function(){
+            socket.emit('connectMessage');
+        });
+        
+        setInterval(function(){ console.log(fps); fps = 0; }, 1000);
+        
+    </script>
     
 </head>
 <body>
 
-<canvas id="view_canvas">
+<canvas id="view_canvas" width="512" height="512">
 
 </canvas>
-
-<script>
-    var volumePrimaryPn = '${volumePrimaryPn}';
-    var nornenjs = new Nornenjs(volumePrimaryPn, '${ipAddress}', 5000, 5005);
-    nornenjs.connect();
-</script>
 
 </body>
 </html>
